@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: my-web-service
+    name: terver-web-service
     env: docker
     dockerfilePath: ./Dockerfile
     autoDeploy: true
