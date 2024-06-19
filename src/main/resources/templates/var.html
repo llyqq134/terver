@@ -13,18 +13,6 @@
             });
         }
 
-        function showAlert() {
-            alert("Файлы помещены в Загрузки.");
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.getElementById("myForm");
-            form.addEventListener("submit", function (event) {
-                event.preventDefault();  // Предотвращает стандартное поведение формы
-                submitForm();
-            });
-        });
-
         function submitForm() {
             const form = document.getElementById("myForm");
             const formData = new FormData(form);
