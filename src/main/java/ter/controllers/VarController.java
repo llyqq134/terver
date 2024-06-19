@@ -2,6 +2,7 @@ package ter.controllers;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -77,7 +78,7 @@ public class VarController {
                     .contentType(MediaType.APPLICATION_OCTET_STREAM)
                     .body(new InputStreamResource(byteArrayInputStream));
         }
-        return ResponseEntity.status(500).build(); 
+        return ResponseEntity.status(500).build(); // Ошибка, если файлы не найдены или не были созданы
     }
 
     private List<String> ProcessingTasks(String[] tasksIds, int option, int numPages) throws Exception {
@@ -102,6 +103,7 @@ public class VarController {
             }
         }
 
+        // Убедитесь, что Solutions.mainFunc возвращает список путей к созданным файлам
         return Solutions.mainFunc(chosenTasks, params, option, numPages);
     }
 }
