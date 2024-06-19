@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+    <link rel="stylesheet" th:href="@{/varStyle.css}">
+    <script>
+        function selectAllCheckboxes(selectAll) {
+            const checkboxes = document.querySelectorAll('input[name="taskIds"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAll.checked;
+            });
+        }
+
+        function showAlert() {
+            alert("Файлы помещены в Загрузки.");
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.getElementById("myForm");
+            form.addEventListener("submit", function(event) {
+                showAlert();
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="vars">
+        <h1>Вариант <span th:text="${option}"></span></h1>
+        <form id="myForm" method="post" th:action="@{/var}">
+            <div>
+                <input type="checkbox" id="selectAll" onclick="selectAllCheckboxes(this)">
+                <label for="selectAll">Выбрать все</label>
+            </div>
+            <div th:each="task: ${tasks}">
+                <input type="checkbox" th:value="${task.getTask_id()}" name="taskIds">
+                <span th:text="${task.getTask_text()}"></span>
+            </div>
+            <div class="inputField">
+                <label for="numPages">Количество вариантов: </label>
+                <input type="number" id="numPages" name="numPages" min="1">
+            </div>
+            <div class="buttons">            
+                <button type="submit">Отправить</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

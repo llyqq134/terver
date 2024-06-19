@@ -1,0 +1,20 @@
+.vars {
+	min-height: 98vh;;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-items: center;
+	background-color: aliceblue;
+}
+
+form {
+		max-width: 140vh;
+}
+
+input {
+	margin-bottom: 15px;
+}
+
+.span {
+	max-width: 50vh;
+}
