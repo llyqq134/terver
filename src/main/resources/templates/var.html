@@ -13,7 +13,8 @@
             });
         }
 
-        function submitForm() {
+        function submitForm(event) {
+            event.preventDefault();  // Предотвращает стандартное поведение формы
             const form = document.getElementById("myForm");
             const formData = new FormData(form);
 
@@ -23,29 +24,33 @@
             })
             .then(response => {
                 if (response.ok) {
-                    showAlert();
                     return response.blob();
                 } else {
                     alert('Ошибка при создании файла.');
+                    throw new Error('Ошибка при создании файла.');
                 }
             })
             .then(blob => {
-                if (blob) {
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.style.display = 'none';
-                    a.href = url;
-                    a.download = 'files.zip'; // Укажите здесь имя файла для скачивания
-                    document.body.appendChild(a);
-                    a.click();
-                    window.URL.revokeObjectURL(url);
-                    window.location.href = '/';
-                }
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = 'files.zip'; // Укажите здесь имя файла для скачивания
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                // Перенаправление на главную страницу
+                window.location.href = '/';
             })
             .catch(error => {
                 console.error('Ошибка:', error);
             });
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("myForm");
+            form.addEventListener("submit", submitForm);
+        });
     </script>
 </head>
 
