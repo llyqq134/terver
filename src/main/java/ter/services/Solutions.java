@@ -9,13 +9,16 @@ import java.util.List;
 public class Solutions {
 	static Random r = new Random();
 
-	public static void mainFunc(List<Integer> chosenTasks, List<List<Double>> params, int option, int numPages)
+	public static List<String> mainFunc(List<Integer> chosenTasks, List<List<Double>> params, int option, int numPages)
 			throws IOException {
+		List<String> paths = new ArrayList<>();
 		String path = System.getProperty("user.home") + "\\Downloads\\";
 		String fileName = "Вариант " + option + ".docx";
 		FileManager taskFile = new FileManager(path, fileName);
+		paths.add(path + fileName);
 		fileName = "Ответы " + option + ".docx";
 		FileManager answerFile = new FileManager(path, fileName);
+		paths.add(path + fileName);
 		for (int i = 0; i < numPages; ++i) {
 			taskFile.WriteRegularText("вариант " + option + "." + (i + 1));
 			answerFile.WriteRegularText("Ответы на вариант " + option + "." + (i + 1));
@@ -131,6 +134,8 @@ public class Solutions {
 				answerFile.addBreakPage();
 			}
 		}
+		
+		return paths;
 	}
 
 	public static double mathAwait(int[] val, double[] chances) {

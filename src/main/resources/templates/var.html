@@ -17,12 +17,47 @@
             alert("Файлы помещены в Загрузки.");
         }
 
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             const form = document.getElementById("myForm");
-            form.addEventListener("submit", function(event) {
-                showAlert();
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();  // Предотвращает стандартное поведение формы
+                submitForm();
             });
         });
+
+        function submitForm() {
+            const form = document.getElementById("myForm");
+            const formData = new FormData(form);
+
+            fetch('/var', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    showAlert();
+                    return response.blob();
+                } else {
+                    alert('Ошибка при создании файла.');
+                }
+            })
+            .then(blob => {
+                if (blob) {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'files.zip'; // Укажите здесь имя файла для скачивания
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    window.location.href = '/';
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+            });
+        }
     </script>
 </head>
 
@@ -42,8 +77,8 @@
                 <label for="numPages">Количество вариантов: </label>
                 <input type="number" id="numPages" name="numPages" min="1">
             </div>
-            <div class="buttons">            
-                <button type="submit">Отправить</button>
+            <div class="buttons">
+                <button type="submit">Download File</button>
             </div>
         </form>
     </div>
