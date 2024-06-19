@@ -2,7 +2,7 @@ services:
   - type: web
     name: my-web-service
     env: docker
-    dockerfilePath: ./dockerfile
+    dockerfilePath: ./DockerFile
     autoDeploy: true
     healthCheckPath: /
     plan: free
